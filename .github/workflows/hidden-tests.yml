@@ -16,7 +16,7 @@ jobs:
       - name: Check out the private tests repository
         uses: actions/checkout@v4
         with:
-          repository: YOURNAME/-tests
+          repository: john-tutoring/bmi_example-tests
           ssh-key: ${{ secrets.TESTS_DEPLOY_KEY }}
           path: hidden
 
