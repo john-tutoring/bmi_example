@@ -1,0 +1,32 @@
+name: hidden-tests
+
+on:
+  push:
+    branches: ["**"]
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the working repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check out the private tests repository
+        uses: actions/checkout@v4
+        with:
+          repository: YOURNAME/-tests
+          ssh-key: ${{ secrets.TESTS_DEPLOY_KEY }}
+          path: hidden
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run the hidden test suite
+        run: bash hidden/gate.sh "$GITHUB_WORKSPACE"
